@@ -19,9 +19,6 @@ public class Herrialdea {
 
     @Override
     public String toString() {
-        return "Herrialdea{" +
-                "izena='" + izena + '\'' +
-                ", bandera='" + bandera + '\'' +
-                '}';
+        return izena;
     }
 }
