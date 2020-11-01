@@ -30,7 +30,7 @@ application {
 
 
 // ext.moduleName = 'gradlejavafxhelloworld'
-mainClassName = "$moduleName/ehu.isad.Main"
+mainClassName = "$moduleName/ehu.isad.Eurobisioa"
 
 
 javafx {
