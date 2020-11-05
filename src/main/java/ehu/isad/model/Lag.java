@@ -12,13 +12,15 @@ public class Lag {
     private String artista;
     private String abestia;
     private int puntuazioa;
+    private int puntuak;
     private Image bandera;
 
-    public Lag(Herrialdea herrialdea, String artista, String abestia) throws FileNotFoundException {
+    public Lag(Herrialdea herrialdea, String artista, String abestia, Integer puntuak) throws FileNotFoundException {
         this.herrialdea = herrialdea;
         this.artista = artista;
         this.abestia = abestia;
         this.puntuazioa = 0;
+        this.puntuak = puntuak;
 
         String path = Utils.lortuEzarpenak().getProperty("pathtoimages")+herrialdea.getBandera()+".png";
         this.bandera = new Image(new FileInputStream(path));
@@ -44,6 +46,10 @@ public class Lag {
         return puntuazioa;
     }
 
+    public int getPuntuak() {
+        return puntuak;
+    }
+
     public void setBandera(Image bandera) {
         this.bandera = bandera;
     }
@@ -58,6 +64,10 @@ public class Lag {
 
     public void setPuntuazioa(int puntuazioa) {
         this.puntuazioa = puntuazioa;
+    }
+
+    public void setPuntuak(int puntuak) {
+        this.puntuak = puntuak;
     }
 
     public void puntuazioaEguneratu(String bozkatzaile, Integer puntuak) {

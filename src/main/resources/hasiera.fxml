@@ -12,6 +12,6 @@
             <Font name="Arial Black" size="16.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgvw_logo" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imgvw_logo" fitHeight="238.0" fitWidth="405.0" layoutX="98.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

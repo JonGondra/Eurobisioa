@@ -82,6 +82,7 @@ public class Eurobisioa extends Application {
 
   public void herrialdeaHautatuErakutsi(){
     stage.setTitle("Informazioaren Eguneraketa");
+    this.ikonoaJarri("");
     stage.setScene(sceneHerrialdeHautatu);
     stage.show();
   }
@@ -90,6 +91,7 @@ public class Eurobisioa extends Application {
     stage.setTitle(herrialdea.getIzena()+"ren inguruko informazioa");
     erroreaKud.banderaJarri(herrialdea.getIzena());
     erroreaKud.info(herrialdea);
+    this.ikonoaJarri(herrialdea.getIzena());
     stage.setScene(sceneErrorea);
     stage.show();
   }
@@ -97,14 +99,28 @@ public class Eurobisioa extends Application {
   public void bozkaketaEginErakutsi(Herrialdea herrialdea){
     stage.setTitle("BozkaketaPanela");
     bozkaketaEginKud.info(herrialdea);
+    this.ikonoaJarri(herrialdea.getIzena());
     stage.setScene(sceneBozkaketaEgin);
     stage.show();
   }
 
   public void top3Erakutsi(){
     stage.setTitle("TOP 3");
+    this.ikonoaJarri("");
     stage.setScene(sceneTop3);
     stage.show();
+  }
+
+  private void ikonoaJarri(String izena){
+    String path = Utils.lortuEzarpenak().getProperty("pathtoimages")+izena+"bandera.png";
+    try {
+      if(stage.getIcons().size()>0){
+        stage.getIcons().remove(0);
+      }
+      stage.getIcons().add(new Image(new FileInputStream(path)));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
 

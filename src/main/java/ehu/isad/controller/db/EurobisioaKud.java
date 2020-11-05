@@ -54,7 +54,7 @@ public class EurobisioaKud {
     }
 
     public List<Lag> lortuOrdezkariak(){
-        String query = "SELECT izena, bandera, artista, abestia FROM Ordezkaritza, Herrialde  WHERE izena = herrialdea AND urtea=(SELECT strftime('%Y','now')-1) ORDER BY izena ASC";
+        String query = "SELECT izena, bandera, artista, abestia, puntuak FROM Ordezkaritza, Herrialde  WHERE izena = herrialdea AND urtea=(SELECT strftime('%Y','now')-1) ORDER BY izena ASC";
         DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
         ResultSet rs = dbKudeatzaile.execSQL(query);
 
@@ -65,8 +65,32 @@ public class EurobisioaKud {
                 String bandera = rs.getString("bandera");
                 String artista = rs.getString("artista");
                 String abestia = rs.getString("abestia");
+                Integer puntuak = rs.getInt("puntuak");
                 Herrialdea herrialdea=new Herrialdea(izena,bandera);
-                emaitza.add(new Lag(herrialdea,artista,abestia));
+                emaitza.add(new Lag(herrialdea,artista,abestia,puntuak));
+            }
+        } catch(SQLException | FileNotFoundException throwables){
+            throwables.printStackTrace();
+        }
+        return emaitza;
+
+    }
+
+    public List<Lag> lortuTop3(){
+        String query = "SELECT izena, bandera, artista, abestia, puntuak FROM Ordezkaritza, Herrialde  WHERE izena = herrialdea AND urtea=(SELECT strftime('%Y','now')-1) ORDER BY puntuak DESC LIMIT 3";
+        DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
+        ResultSet rs = dbKudeatzaile.execSQL(query);
+
+        List<Lag> emaitza = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                String izena = rs.getString("izena");
+                String bandera = rs.getString("bandera");
+                String artista = rs.getString("artista");
+                String abestia = rs.getString("abestia");
+                Integer puntuak = rs.getInt("puntuak");
+                Herrialdea herrialdea=new Herrialdea(izena,bandera);
+                emaitza.add(new Lag(herrialdea,artista,abestia,puntuak));
             }
         } catch(SQLException | FileNotFoundException throwables){
             throwables.printStackTrace();
