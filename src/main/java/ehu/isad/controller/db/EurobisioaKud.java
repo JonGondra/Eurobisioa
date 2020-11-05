@@ -1,7 +1,9 @@
 package ehu.isad.controller.db;
 
 import ehu.isad.model.Herrialdea;
+import ehu.isad.model.Lag;
 
+import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,5 +53,34 @@ public class EurobisioaKud {
         return null;
     }
 
+    public List<Lag> lortuOrdezkariak(){
+        String query = "SELECT izena, bandera, artista, abestia FROM Ordezkaritza, Herrialde  WHERE izena = herrialdea AND urtea=(SELECT strftime('%Y','now')-1) ORDER BY izena ASC";
+        DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
+        ResultSet rs = dbKudeatzaile.execSQL(query);
+
+        List<Lag> emaitza = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                String izena = rs.getString("izena");
+                String bandera = rs.getString("bandera");
+                String artista = rs.getString("artista");
+                String abestia = rs.getString("abestia");
+                Herrialdea herrialdea=new Herrialdea(izena,bandera);
+                emaitza.add(new Lag(herrialdea,artista,abestia));
+            }
+        } catch(SQLException | FileNotFoundException throwables){
+            throwables.printStackTrace();
+        }
+        return emaitza;
+
+    }
+
+    public void puntuakEguneratu(String bozkatzaile, Lag bozkatua, Integer puntuak){
+        DBKudeatzaile dbKudeatzaile = DBKudeatzaile.getInstantzia();
+        String query1 = "INSERT INTO Bozkaketa VALUES ('"+bozkatua.getIzena()+"', '"+bozkatzaile+"',(SELECT strftime('%Y','now')),"+puntuak+")";
+        String query2 = "UPDATE Ordezkaritza SET puntuak=puntuak+"+puntuak+" WHERE herrialdea='"+bozkatua.getIzena()+"' and urtea = (SELECT strftime('%Y', 'now')-1)";
+        dbKudeatzaile.execSQL(query1);
+        dbKudeatzaile.execSQL(query2);
+    }
 
 }

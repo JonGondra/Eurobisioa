@@ -30,6 +30,9 @@ public class ErroreaKud {
     private Button btn_ok;
 
     @FXML
+    private ImageView logo;
+
+    @FXML
     void onClick(ActionEvent event) {
         main.herrialdeaHautatuErakutsi();
 
@@ -38,12 +41,22 @@ public class ErroreaKud {
     public void info(Herrialdea herrialdea){
         this.txt_banatu.setText(herrialdea.getIzena()+ "k jada banatu ditu bere puntuak");
         this.banderaJarri(herrialdea.getBandera());
+        this.logoJarri();
     }
 
     public void banderaJarri(String herrialdea) {
-        String imagePath = Utils.lortuEzarpenak().getProperty("pathToImages")+herrialdea+"bandera.png";
+        String imagePath = Utils.lortuEzarpenak().getProperty("pathtoimages")+herrialdea+"bandera.png";
         try {
             bandera_imgvw.setImage(new Image(new FileInputStream(imagePath)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void logoJarri(){
+        String imagePath = Utils.lortuEzarpenak().getProperty("pathtoimages")+"logo.png";
+        try {
+            logo.setImage(new Image(new FileInputStream(imagePath)));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

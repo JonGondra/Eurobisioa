@@ -1,8 +1,11 @@
 package ehu.isad.model;
 
+import javafx.scene.image.Image;
+
 public class Herrialdea {
     private String izena;
     private String bandera;
+
 
     public Herrialdea(String izena, String bandera) {
         this.izena = izena;
